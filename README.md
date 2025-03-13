@@ -66,10 +66,65 @@ php -S 127.0.0.1:8000
 |-------------|--------|--------------------------------|----------------------------------------------|
 | /shops      | GET    | Return all shops              | Optional: ?orderby=[field]&direction=[dir]   |
 | /shops/{id} | GET    | Return one shop               | -                                            |
-| /shops      | POST   | Create new shop               | JSON: {shop_name, shop_description}          |
-| /shops/{id} | PUT    | Update a shop                 | JSON: {shop_name, shop_description}          |
+| /shops      | POST   | Create new shop               | JSON body (see below)                        |
+| /shops/{id} | PUT    | Update a shop                 | JSON body (see below)                        |
 | /shops/{id} | DELETE | Delete a shop                 | -                                            |
 
+### POST /shops
+Creates a new shop. Required fields are marked with *.
+
+Request body (JSON):
+```json
+{
+    "shop_name": "string *",          // Required
+    "shop_description": "string",
+    "shop_address": "string",
+    "shop_phone": "string",
+    "shop_email": "string",
+    "shop_website": "string"
+}
+```
+
+### PUT /shops/{id}
+Updates an existing shop. All fields are optional.
+
+Request body (JSON):
+```json
+{
+    "shop_name": "string",
+    "shop_description": "string",
+    "shop_address": "string",
+    "shop_phone": "string",
+    "shop_email": "string",
+    "shop_website": "string"
+}
+```
+
+### Example Requests
+
+Create a new shop:
+```bash
+curl -X POST http://localhost:8000/shops \
+  -H "Content-Type: application/json" \
+  -d '{
+    "shop_name": "My Shop",
+    "shop_description": "My shop description",
+    "shop_address": "123 Main St",
+    "shop_phone": "+1 234 567 8900",
+    "shop_email": "shop@example.com",
+    "shop_website": "https://myshop.com"
+  }'
+```
+
+Update a shop:
+```bash
+curl -X PUT http://localhost:8000/shops/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "shop_name": "Updated Shop Name",
+    "shop_description": "Updated description"
+  }'
+```
 ## Framework Structure
 
 The app is based on a basic MVC framework:
