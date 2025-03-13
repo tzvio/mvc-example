@@ -38,7 +38,7 @@ class ShopModel extends Model {
     public function getById($id) {
         $sth = $this->db->prepare('SELECT * FROM shops WHERE shop_id = ?');
         $sth->execute([$id]);
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $sth->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**

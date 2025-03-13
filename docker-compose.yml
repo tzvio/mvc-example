@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-store-web
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html:delegated
+      - ./docker/apache.conf:/etc/apache2/sites-available/000-default.conf:ro
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: api-store-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wshop_api_store
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
