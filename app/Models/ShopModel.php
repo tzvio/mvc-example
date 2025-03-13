@@ -47,24 +47,49 @@ class ShopModel extends Model {
     public function create($data) {
         $shop_name = $data->shop_name ?? '';
         $shop_description = $data->shop_description ?? '';
-        $sth = $this->db->prepare('INSERT INTO shops(shop_name, shop_description) VALUES(?,?)');
-        $sth->execute([$shop_name, $shop_description]);
+        $shop_address = $data->shop_address ?? '';
+        $shop_phone = $data->shop_phone ?? '';
+        $shop_email = $data->shop_email ?? '';
+        $shop_website = $data->shop_website ?? '';
+        $sth = $this->db->prepare('INSERT INTO shops(shop_name, shop_description, shop_address, shop_phone, shop_email, shop_website) VALUES(?,?,?,?,?,?)');
+        $sth->execute([$shop_name, $shop_description, $shop_address, $shop_phone, $shop_email, $shop_website]);
     }
 
     /**
      * update a shop  name or description by id
      */
-    public function update($data, $id)  {
-        if (isset($data->shop_name) || isset($data->shop_description)) {
-            if (!empty($data->shop_name)) {
-                $sth = $this->db->prepare('UPDATE shops SET shop_name=? WHERE shop_id=?');
-                $sth->execute([$data->shop_name, $id]); 
-            }
-            if (!empty($data->shop_description)) {
-                $sth = $this->db->prepare('UPDATE shops SET shop_description=? WHERE shop_id=?');
-                $sth->execute([$data->shop_description, $id]); 
-            }
-        }           
+    public function update($data, $id) {
+        $fields = [];
+        $values = [];
+        if (!empty($data->shop_name)) {
+            $fields[] = 'shop_name=?';
+            $values[] = $data->shop_name;
+        }
+        if (!empty($data->shop_description)) {
+            $fields[] = 'shop_description=?';
+            $values[] = $data->shop_description;
+        }
+        if (!empty($data->shop_address)) {
+            $fields[] = 'shop_address=?';
+            $values[] = $data->shop_address;
+        }
+        if (!empty($data->shop_phone)) {
+            $fields[] = 'shop_phone=?';
+            $values[] = $data->shop_phone;
+        }
+        if (!empty($data->shop_email)) {
+            $fields[] = 'shop_email=?';
+            $values[] = $data->shop_email;
+        }
+        if (!empty($data->shop_website)) {
+            $fields[] = 'shop_website=?';
+            $values[] = $data->shop_website;
+        }
+        if (!empty($fields)) {
+            $values[] = $id;
+            $sth = $this->db->prepare('UPDATE shops SET ' . implode(', ', $fields) . ' WHERE shop_id=?');
+            $sth->execute($values);
+        }
     }
 
     /**

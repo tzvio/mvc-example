@@ -53,11 +53,15 @@ class ShopsController  {
      * Request Method: POST
      * Create new shop
      * Data is needed to be provided in json format
-     * Follwing this structure:
+     * Following this structure:
      * {
-     *  shop_name: 'shop'
-     *  shop_description: 'description'  
-     *  }
+     *  shop_name: 'shop',
+     *  shop_description: 'description',
+     *  shop_address: 'address',
+     *  shop_phone: 'phone',
+     *  shop_email: 'email',
+     *  shop_website: 'website',
+     * }
      * shop_name field is obligatory 
      */
     public function create() {
@@ -75,11 +79,15 @@ class ShopsController  {
      * Request Method: PUT
      * Update shop by id
      * Data is needed to be provided in json format
-     * Follwing this structure:
+     * Following this structure:
      * {
-     *  shop_name: 'shop'
-     *  shop_description: 'description'  
-     *  }
+     *  shop_name: 'shop',
+     *  shop_description: 'description',
+     *  shop_address: 'address',
+     *  shop_phone: 'phone',
+     *  shop_email: 'email',
+     *  shop_website: 'website',
+     * }
      */    
     public function update($id){
         $data = json_decode($this->request);
