@@ -20,7 +20,7 @@ Usage
 -----
 There several endpoints exist, and the correct request method should be used:
 /shops (GET) - return all shops
-optionaly - add ?sortby=[field_name]&orderby=[direction] 
+optionaly - add ?orderby=[field_name]&direction=[direction] 
 
 /shops/id (GET) - return one shop
 /shops (POST) - create new shop , json body required 
